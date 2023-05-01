@@ -5,6 +5,8 @@ import type {
   DashCardId,
   DashCardDataMap,
   ParameterId,
+  DashboardOrderedTab,
+  DashboardTabId,
 } from "metabase-types/api";
 import { ParameterValueOrArray } from "metabase-types/types/Parameter";
 
@@ -16,8 +18,16 @@ export type DashboardSidebarName =
   | "sharing"
   | "info";
 
-export type StoreDashboard = Omit<Dashboard, "ordered_cards"> & {
+export type StoreDashboardTab = DashboardOrderedTab & {
+  isRemoved?: boolean;
+};
+
+export type StoreDashboard = Omit<
+  Dashboard,
+  "ordered_cards" | "ordered_tabs"
+> & {
   ordered_cards: DashCardId[];
+  ordered_tabs?: StoreDashboardTab[];
 };
 
 export type StoreDashcard = DashboardOrderedCard & {
@@ -26,6 +36,14 @@ export type StoreDashcard = DashboardOrderedCard & {
 };
 
 export type SelectedTabId = DashboardId | null;
+
+export type TabDeletionId = number;
+
+export type TabDeletion = {
+  id: TabDeletionId;
+  tabId: DashboardTabId;
+  removedDashCardIds: DashCardId[];
+};
 
 export interface DashboardState {
   dashboardId: DashboardId | null;
@@ -59,4 +77,6 @@ export interface DashboardState {
   };
 
   missingActionParameters: unknown;
+
+  tabDeletions: Record<TabDeletionId, TabDeletion>;
 }
