@@ -35,9 +35,6 @@
     [:display _ _]
     (deferred-tru "changed the display from {0} to {1}" v1 v2)
 
-    [:updated_at _ _]
-    nil
-
     [:result_metadata _ _]
     (deferred-tru "edited the metadata")
 
@@ -47,8 +44,7 @@
     [:visualization_settings _ _]
     (deferred-tru "changed the visualization settings")
 
-    [_ _ _]
-    (deferred-tru "changed {0} from \"{1}\" to \"{2}\"" (name k) v1 v2)))
+    :else nil))
 
 (defn build-sentence
   "Join parts of a sentence together to build a compound one."

@@ -273,7 +273,7 @@ export function getRevisionEventsForTimeline(
         );
         event.description = (
           <RevisionBatchedDescription
-            changes={changes}
+            //changes={changes}
             fallback={revision.description}
           />
         );
