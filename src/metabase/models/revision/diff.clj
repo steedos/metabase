@@ -1,7 +1,8 @@
 (ns metabase.models.revision.diff
   (:require
    [clojure.core.match :refer [match]]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [metabase.util.i18n :refer [deferred-tru]]))
 
 (defn- diff-string* [k v1 v2]
   (match [k v1 v2]
@@ -35,8 +36,8 @@
   (when (seq parts)
     (cond
       (= (count parts) 1) (str (first parts) \.)
-      (= (count parts) 2) (format "%s and %s." (first parts) (second parts))
-      :else               (format "%s, %s" (first parts) (build-sentence (rest parts))))))
+      (= (count parts) 2) (str (first parts) " " (deferred-tru "and")  " " (second parts) \.)
+      :else               (str (first parts) ", " (build-sentence (rest parts))))))
 
 (defn diff-string
   "Create a string describing how `o1` is different from `o2`.
