@@ -32,6 +32,6 @@
 
   (let [[before after] (data/diff {:name "Tips by State", :private false, :priority "Important"}
                                   {:name "Spots by State", :private true, :priority "Regular"})]
-    (is (= (str "changed priority from \"Important\" to \"Regular\", made this card private and renamed it from "
+    (is (= (str "changed priority from \"Important\" to \"Regular\", made it private and renamed it from "
                 "\"Tips by State\" to \"Spots by State\".")
            (diff/diff-string "card" before after)))))

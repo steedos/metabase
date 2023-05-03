@@ -225,14 +225,8 @@
 
                                     :else
                                     (deferred-tru "modified the series on card {0}" (get-in dashboard1 [:cards idx :card_id]))))))]
-    (-> [(when (and dashboard1 (:name changes))
-           (format "renamed it from \"%s\" to \"%s\"" (:name dashboard1) (:name dashboard2)))
-         (when (:description changes)
-           (cond
-             (nil? (:description dashboard1)) (deferred-tru "added a description")
-             (nil? (:description dashboard2)) (deferred-tru "removed the description")
-             :else (deferred-tru "changed the description from \"{0}\" to \"{1}\""
-                           (:description dashboard1) (:description dashboard2))))
+    (-> [(when-let [default-description (revision/diff-str :default dashboard1 dashboard2)]
+           default-description)
          (when (:cache_ttl changes)
            (cond
              (nil? (:cache_ttl dashboard1)) (deferred-tru "added a cache ttl")

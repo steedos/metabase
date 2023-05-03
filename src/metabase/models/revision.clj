@@ -46,7 +46,9 @@
        :after  after})))
 
 (defmulti diff-str
-  "Return a string describing the difference between `object-1` and `object-2`."
+  "Return a string describing the difference between `object-1` and `object-2`.
+
+  The returned string should be i18n-ed."
   {:arglists '([model object-1 object-2])}
   mi/dispatch-on-model)
 
