@@ -15,9 +15,9 @@ const blockWrapper = (content, blockType = "it") => `
 `;
 
 const validCases = [
-  `cy.get('#my-div').within(() => findByText('foo'));`,
+  `cy.get('#my-div').within(() => cy.findByText('foo'));`,
   `cy.get('#my-div').within(() => {
-    findByText('foo')
+    cy.findByText('foo');
   });`,
   `cy.get('#my-div').findByText('foo');`,
   `cy.findByLabelText('label-name').findByText('this is fine');`,
