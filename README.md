@@ -69,15 +69,27 @@ If you’d like more technical resources to set up your data stack with Metabase
 
 ## Steedos Labs
 
-Update tags from upstream project 
+Update tags from upstream project
 
 ```
 git fetch --tags --force
 ```
 
-Build frontend
+Build frontend dev
 
 ```
+export WEBPACK_BUNDLE=development
+yarn build-quick:cljs
+yarn build:js
+```
+
+Build frontend production
+
+```
+nvm i 16
+nvm use 16
+export WEBPACK_BUNDLE=production
+yarn build:cljs
 yarn build:js
 ```
 
