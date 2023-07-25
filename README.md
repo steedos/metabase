@@ -65,3 +65,24 @@ Unless otherwise noted, all files © 2023 Metabase, Inc.
 ## [Metabase Experts](https://www.metabase.com/partners/)
 
 If you’d like more technical resources to set up your data stack with Metabase, connect with a [Metabase Expert](https://www.metabase.com/partners/?utm_source=readme&utm_medium=metabase-expetrs&utm_campaign=readme).
+
+
+## Steedos Labs
+
+Update tags from upstream project 
+
+```
+git fetch --tags --force
+```
+
+Build frontend
+
+```
+yarn build:js
+```
+
+Copy to Steedos Analytics
+
+```
+cp -r resources/frontend_client/* ../analytics/frontend
+```
