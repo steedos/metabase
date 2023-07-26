@@ -91,6 +91,8 @@ nvm use 16
 export WEBPACK_BUNDLE=production
 yarn build:cljs
 yarn build:js
+yarn build-static-viz
+yarn build-viz
 ```
 
 Copy to Steedos Analytics
