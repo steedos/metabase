@@ -1,8 +1,10 @@
 export function appendSlug(path: string | number, slug?: string) {
-  return slug ? `${path}-${slug}` : String(path);
+  return String(path);
+  // return slug ? `${path}-${slug}` : String(path);
 }
 
 export function extractEntityId(slug = "") {
+  return slug;
   const id = parseInt(slug, 10);
   return Number.isSafeInteger(id) ? id : undefined;
 }
