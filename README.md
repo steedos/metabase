@@ -95,6 +95,12 @@ yarn build-static-viz
 yarn build-viz
 ```
 
+Test frontent
+
+```
+npx serve resources/frontend_client/
+```
+
 Copy to Steedos Analytics
 
 ```

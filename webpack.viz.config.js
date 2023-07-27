@@ -8,6 +8,8 @@ const SRC_PATH = __dirname + "/frontend/src/metabase";
 const BUILD_PATH = __dirname + "/resources/frontend_client";
 const CLJS_SRC_PATH = __dirname + "/frontend/src/cljs_release";
 const LIB_SRC_PATH = __dirname + "/frontend/src/metabase-lib";
+const ENTERPRISE_SRC_PATH =
+  __dirname + "/enterprise/frontend/src/metabase-enterprise";
 
 const WEBPACK_BUNDLE = process.env.WEBPACK_BUNDLE || "development";
 const devMode = WEBPACK_BUNDLE !== "production";
@@ -24,7 +26,7 @@ const CSS_CONFIG = {
 };
 
 module.exports = env => {
-  const shouldDisableMinimization = env.WEBPACK_WATCH === true;
+  const shouldDisableMinimization = devMode || env.WEBPACK_WATCH === true;
 
   return {
     mode: "production",
@@ -36,9 +38,9 @@ module.exports = env => {
 
     entry: {
       "lib-viz": {
-        import: "./visualizations/components/Visualization/index.ts",
+        import: "./lib-viz.js",
         library: {
-          name: "Visualizations",
+          name: "Visualization",
           type: "var",
         },
       },
@@ -47,6 +49,8 @@ module.exports = env => {
     output: {
       path: BUILD_PATH + "/app/dist",
       filename: "[name].bundle.js",
+      library: 'Visualization',
+      libraryTarget: 'umd',
     },
 
     module: {
@@ -100,6 +104,14 @@ module.exports = env => {
         cljs: CLJS_SRC_PATH,
         "metabase-lib": LIB_SRC_PATH,
         style: SRC_PATH + "/css/core/index",
+        ace: __dirname + "/node_modules/ace-builds/src-min-noconflict", "ee-plugins":
+        process.env.MB_EDITION === "ee"
+          ? ENTERPRISE_SRC_PATH + "/plugins"
+          : SRC_PATH + "/lib/noop",
+      "ee-overrides":
+        process.env.MB_EDITION === "ee"
+          ? ENTERPRISE_SRC_PATH + "/overrides"
+          : SRC_PATH + "/lib/noop",
       },
     },
     optimization: {
