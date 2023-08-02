@@ -10,6 +10,13 @@ import { isFitViewportMode } from "metabase/hoc/FitViewPort";
 export const IS_EMBED_PREVIEW = IFRAMED_IN_SELF;
 
 export function initializeEmbedding(store) {
+  const embedOptions = store.getState().settings.values["embed-options"];
+  embedOptions &&
+    store.dispatch(
+      setOptions({
+        ...embedOptions,
+      }),
+    );
   if (isWithinIframe()) {
     let currentHref;
     let currentFrame;
