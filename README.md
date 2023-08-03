@@ -105,4 +105,13 @@ Copy to Steedos Analytics
 
 ```
 cp -r resources/frontend_client/* ../analytics/frontend
+cd ../analytics/frontend
+npm login
+npm publish
+```
+
+Sync npmmirror
+
+```
+https://npmmirror.com/sync/@steedos-labs/analytics-frontend
 ```

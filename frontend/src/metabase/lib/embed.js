@@ -11,12 +11,6 @@ export const IS_EMBED_PREVIEW = IFRAMED_IN_SELF;
 
 export function initializeEmbedding(store) {
   const embedOptions = store.getState().settings.values["embed-options"];
-  embedOptions &&
-    store.dispatch(
-      setOptions({
-        ...embedOptions,
-      }),
-    );
   if (isWithinIframe()) {
     let currentHref;
     let currentFrame;
@@ -50,6 +44,7 @@ export function initializeEmbedding(store) {
     });
     store.dispatch(
       setOptions({
+        ...embedOptions,
         ...parseSearchOptions(window.location.search),
         ...parseHashOptions(window.location.hash),
       }),
