@@ -27,6 +27,7 @@ const PATHS_WITHOUT_NAVBAR = [
 ];
 const EMBEDDED_PATHS_WITH_NAVBAR = [
   HOMEPAGE_PATH,
+  /^\/browse\.*/, // Steedos Analytics
   /^\/collection\/.*/,
   /^\/archive/,
 ];

@@ -5,7 +5,9 @@ import { CardIcon, CardRoot, CardTitle } from "./HomeHelpCard.styled";
 
 const HomeHelpCard = (): JSX.Element => {
   return (
-    <CardRoot href={MetabaseSettings.learnUrl()}>
+    <CardRoot href={MetabaseSettings.learnUrl()} className="hidden">
+      {" "}
+      {/* Steedos Analytics */}
       <CardIcon name="reference" />
       <CardTitle>{t`Metabase tips`}</CardTitle>
     </CardRoot>

@@ -16,7 +16,7 @@ export default function BrowseHeader({ crumbs }) {
         <BrowserCrumbs crumbs={crumbs} analyticsContext={ANALYTICS_CONTEXT} />
         <div className="flex flex-align-right">
           <Link
-            className="flex flex-align-right"
+            className="flex flex-align-right hidden" // Steedos Analytics
             to="reference"
             data-metabase-event="NavBar;Reference"
           >
