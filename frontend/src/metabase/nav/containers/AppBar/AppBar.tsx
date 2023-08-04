@@ -9,9 +9,9 @@ import {
   getIsLogoVisible,
   getIsNavBarEnabled,
   getIsNewButtonVisible,
-  getIsProfileLinkVisible,
+  // getIsProfileLinkVisible,
   getIsQuestionLineageVisible,
-  getIsSearchVisible,
+  // getIsSearchVisible,
   RouterProps,
 } from "metabase/selectors/app";
 import { getUser } from "metabase/selectors/user";
@@ -23,10 +23,11 @@ const mapStateToProps = (state: State, props: RouterProps) => ({
   collectionId: Collections.selectors.getInitialCollectionId(state, props),
   isNavBarOpen: getIsNavbarOpen(state),
   isNavBarEnabled: getIsNavBarEnabled(state, props),
+  // Steedos Analytics
   isLogoVisible: getIsLogoVisible(state),
-  isSearchVisible: getIsSearchVisible(state),
+  isSearchVisible: false, // getIsSearchVisible(state),
   isNewButtonVisible: getIsNewButtonVisible(state),
-  isProfileLinkVisible: getIsProfileLinkVisible(state),
+  isProfileLinkVisible: false, // getIsProfileLinkVisible(state),
   isCollectionPathVisible: getIsCollectionPathVisible(state, props),
   isQuestionLineageVisible: getIsQuestionLineageVisible(state, props),
 });

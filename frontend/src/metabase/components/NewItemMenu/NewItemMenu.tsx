@@ -100,6 +100,7 @@ const NewItemMenu = ({
       });
     }
 
+    // Steedos Analytics
     items.push(
       {
         title: t`Dashboard`,
@@ -107,43 +108,44 @@ const NewItemMenu = ({
         action: () => setModal("new-dashboard"),
         event: `${analyticsContext};New Dashboard Click;`,
       },
-      {
-        title: t`Collection`,
-        icon: "folder",
-        action: () => setModal("new-collection"),
-        event: `${analyticsContext};New Collection Click;`,
-      },
+      // {
+      //   title: t`Collection`,
+      //   icon: "folder",
+      //   action: () => setModal("new-collection"),
+      //   event: `${analyticsContext};New Collection Click;`,
+      // },
     );
-    if (hasNativeWrite) {
-      const collectionQuery = collectionId
-        ? `?collectionId=${collectionId}`
-        : "";
 
-      items.push({
-        title: t`Model`,
-        icon: "model",
-        link: `/model/new${collectionQuery}`,
-        event: `${analyticsContext};New Model Click;`,
-        onClose: onCloseNavbar,
-      });
-    }
+    // if (hasNativeWrite) {
+    //   const collectionQuery = collectionId
+    //     ? `?collectionId=${collectionId}`
+    //     : "";
 
-    if (hasModels && hasDatabaseWithActionsEnabled && hasNativeWrite) {
-      items.push({
-        title: t`Action`,
-        icon: "bolt",
-        action: () => setModal("new-action"),
-        event: `${analyticsContext};New Action Click;`,
-      });
-    }
+    //   items.push({
+    //     title: t`Model`,
+    //     icon: "model",
+    //     link: `/model/new${collectionQuery}`,
+    //     event: `${analyticsContext};New Model Click;`,
+    //     onClose: onCloseNavbar,
+    //   });
+    // }
+
+    // if (hasModels && hasDatabaseWithActionsEnabled && hasNativeWrite) {
+    //   items.push({
+    //     title: t`Action`,
+    //     icon: "bolt",
+    //     action: () => setModal("new-action"),
+    //     event: `${analyticsContext};New Action Click;`,
+    //   });
+    // }
 
     return items;
   }, [
     hasDataAccess,
     hasNativeWrite,
     analyticsContext,
-    hasModels,
-    hasDatabaseWithActionsEnabled,
+    // hasModels,
+    // hasDatabaseWithActionsEnabled,
     collectionId,
     onCloseNavbar,
     hasDatabaseWithJsonEngine,
