@@ -45,8 +45,12 @@ export function getFieldName(tableMetadata, field, options) {
   return "[Unknown Field]";
 }
 
-export function getTableDescription(tableMetadata) {
-  return [inflection.pluralize(tableMetadata.display_name)];
+export function getTableDescription(tableMetadata, query, options) {
+  if (options.locale === "en") {
+    return [inflection.pluralize(tableMetadata.display_name)];
+  } else {
+    return tableMetadata.display_name;
+  }
 }
 
 export function getAggregationDescription(tableMetadata, query, options) {
@@ -187,7 +191,11 @@ export function getLimitDescription(tableMetadata, { limit }) {
   }
 }
 
-export function generateQueryDescription(tableMetadata, query, options = {}) {
+export function generateQueryDescription(
+  tableMetadata,
+  query,
+  options = { locale: "en" },
+) {
   if (!tableMetadata) {
     return "";
   }

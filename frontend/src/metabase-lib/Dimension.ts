@@ -785,7 +785,12 @@ export class FieldDimension extends Dimension {
    * Whether this Field clause has an integer Field ID (as opposed to a string Field name).
    */
   isIntegerFieldId(): boolean {
-    return typeof this._fieldIdOrName === "number";
+    // return typeof this._fieldIdOrName === "number";
+    // Steedos Analytics
+    return (
+      typeof this._fieldIdOrName === "number" ||
+      typeof this._fieldIdOrName === "string"
+    );
   }
 
   /**

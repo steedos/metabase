@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { t } from "ttag";
 
+import MetabaseSettings from "metabase/lib/settings";
 import Form, { FormField, FormFooter } from "metabase/containers/FormikForm";
 import ModalContent from "metabase/components/ModalContent";
 import Radio from "metabase/core/components/Radio";
@@ -91,10 +92,15 @@ export default class SaveQuestionModal extends Component {
     const isStructured = Q_DEPRECATED.isStructured(card.dataset_query);
     const isReadonly = originalCard != null && !originalCard.can_write;
 
+    const locale =
+      MetabaseSettings.get("user-locale") ||
+      MetabaseSettings.get("site-locale");
     const initialValues = {
       name:
         card.name || isStructured
-          ? generateQueryDescription(tableMetadata, card.dataset_query.query)
+          ? generateQueryDescription(tableMetadata, card.dataset_query.query, {
+              locale,
+            })
           : "",
       description: card.description || "",
       collection_id:
