@@ -91,8 +91,6 @@ nvm use 16
 export WEBPACK_BUNDLE=production
 yarn build:cljs
 yarn build:js
-yarn build-static-viz
-yarn build-viz
 ```
 
 Test frontent
@@ -106,6 +104,7 @@ Copy to Steedos Analytics
 ```
 cp -r resources/frontend_client/* ../analytics/frontend
 cd ../analytics/frontend
+rm -r *.js.map
 npm login
 npm publish
 ```
