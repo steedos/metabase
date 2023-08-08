@@ -108,6 +108,7 @@ class PublicDashboard extends Component {
       parameterValues,
       isFullscreen,
       isNightMode,
+      location,
     } = this.props;
     const buttons = !isWithinIframe()
       ? getDashboardActions(this, { ...this.props, isPublic: true })
@@ -115,6 +116,7 @@ class PublicDashboard extends Component {
 
     return (
       <EmbedFrame
+        location={location}
         name={dashboard && dashboard.name}
         description={dashboard && dashboard.description}
         dashboard={dashboard}

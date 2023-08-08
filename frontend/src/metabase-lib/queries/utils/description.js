@@ -120,7 +120,7 @@ export function getAggregationDescription(tableMetadata, query, options) {
           return [formatExpression(aggregation, { tableMetadata })];
       }
     }),
-    "and",
+    t`and`,
   );
 }
 

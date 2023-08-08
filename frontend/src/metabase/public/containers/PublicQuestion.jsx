@@ -171,6 +171,7 @@ class PublicQuestion extends Component {
     const {
       params: { uuid, token },
       metadata,
+      location,
     } = this.props;
     const { card, result, initialized, parameterValues } = this.state;
     const question = new Question(card, metadata);
@@ -191,6 +192,7 @@ class PublicQuestion extends Component {
 
     return (
       <EmbedFrame
+        location={location}
         name={card && card.name}
         description={card && card.description}
         actionButtons={actionButtons}

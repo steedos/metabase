@@ -1,21 +1,32 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const WebpackNotifierPlugin = require("webpack-notifier");
+const ReactRefreshPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+
+const fs = require("fs");
+const os = require("os");
+
+const webpack = require("webpack");
 
 const ASSETS_PATH = __dirname + "/resources/frontend_client/app/assets";
 const FONTS_PATH = __dirname + "/resources/frontend_client/app/fonts";
-const TYPES_SRC_PATH = __dirname + "/frontend/src/metabase-types";
 const SRC_PATH = __dirname + "/frontend/src/metabase";
-const BUILD_PATH = __dirname + "/resources/frontend_client";
-const CLJS_SRC_PATH = __dirname + "/frontend/src/cljs_release";
 const LIB_SRC_PATH = __dirname + "/frontend/src/metabase-lib";
 const ENTERPRISE_SRC_PATH =
   __dirname + "/enterprise/frontend/src/metabase-enterprise";
+const TYPES_SRC_PATH = __dirname + "/frontend/src/metabase-types";
+const CLJS_SRC_PATH = __dirname + "/frontend/src/cljs_release";
+const CLJS_SRC_PATH_DEV = __dirname + "/frontend/src/cljs";
+const TEST_SUPPORT_PATH = __dirname + "/frontend/test/__support__";
+const BUILD_PATH = __dirname + "/resources/frontend_client";
+const E2E_PATH = __dirname + "/e2e";
 
 const WEBPACK_BUNDLE = process.env.WEBPACK_BUNDLE || "development";
 const devMode = WEBPACK_BUNDLE !== "production";
 
 const BABEL_CONFIG = {
-  cacheDirectory: process.env.BABEL_DISABLE_CACHE ? null : ".babel_cache",
+  cacheDirectory: process.env.BABEL_DISABLE_CACHE ? false : ".babel_cache",
 };
 
 const CSS_CONFIG = {
@@ -25,11 +36,10 @@ const CSS_CONFIG = {
   importLoaders: 1,
 };
 
-module.exports = env => {
-  const shouldDisableMinimization = devMode || env.WEBPACK_WATCH === true;
+const shouldDisableMinimization = devMode || process.env.WEBPACK_WATCH === true;
 
-  return {
-    mode: "production",
+const config = (module.exports = {
+    mode: devMode ? "development" : "production",
     context: SRC_PATH,
 
     performance: {
@@ -37,22 +47,21 @@ module.exports = env => {
     },
 
     entry: {
-      "lib-viz": {
-        import: "./lib-viz.js",
-        library: {
-          name: "Visualization",
-          type: "var",
-        },
+      "app-umd": {
+        import: "./app-umd.js",
       },
     },
 
     output: {
       path: BUILD_PATH + "/app/dist",
       filename: "[name].bundle.js",
-      library: 'Visualization',
+      library: 'Analytics',
       libraryTarget: 'umd',
     },
-
+    externals: {
+      react: 'React',
+      "react-dom": 'ReactDOM',
+    },
     module: {
       rules: [
         {
@@ -99,22 +108,43 @@ module.exports = env => {
       alias: {
         assets: ASSETS_PATH,
         fonts: FONTS_PATH,
-        "metabase-types": TYPES_SRC_PATH,
         metabase: SRC_PATH,
-        cljs: CLJS_SRC_PATH,
         "metabase-lib": LIB_SRC_PATH,
+        "metabase-enterprise": ENTERPRISE_SRC_PATH,
+        "metabase-types": TYPES_SRC_PATH,
+        "metabase-dev": `${SRC_PATH}/dev${devMode ? "" : "-noop"}.js`,
+        cljs: devMode ? CLJS_SRC_PATH_DEV : CLJS_SRC_PATH,
+        __support__: TEST_SUPPORT_PATH,
+        e2e: E2E_PATH,
         style: SRC_PATH + "/css/core/index",
-        ace: __dirname + "/node_modules/ace-builds/src-min-noconflict", "ee-plugins":
-        process.env.MB_EDITION === "ee"
-          ? ENTERPRISE_SRC_PATH + "/plugins"
-          : SRC_PATH + "/lib/noop",
-      "ee-overrides":
-        process.env.MB_EDITION === "ee"
-          ? ENTERPRISE_SRC_PATH + "/overrides"
-          : SRC_PATH + "/lib/noop",
-      },
+        ace: __dirname + "/node_modules/ace-builds/src-min-noconflict",
+        // NOTE @kdoh - 7/24/18
+        // icepick 2.x is es6 by defalt, to maintain backwards compatability
+        // with ie11 point to the minified version
+        icepick: __dirname + "/node_modules/icepick/icepick.min",
+        // conditionally load either the EE plugins file or a empty file in the CE code tree
+        "ee-plugins":
+          process.env.MB_EDITION === "ee"
+            ? ENTERPRISE_SRC_PATH + "/plugins"
+            : SRC_PATH + "/lib/noop",
+        "ee-overrides":
+          process.env.MB_EDITION === "ee"
+            ? ENTERPRISE_SRC_PATH + "/overrides"
+            : SRC_PATH + "/lib/noop",
+        }
     },
     optimization: {
+      // runtimeChunk: "single",
+      // splitChunks: {
+      //   cacheGroups: {
+      //     vendors: {
+      //       test: /[\\/]node_modules[\\/]/,
+      //       chunks: "all",
+      //       name: "vendor",
+      //     },
+      //   },
+      // },
+      usedExports: true,
       minimize: !shouldDisableMinimization,
     }, 
     
@@ -126,6 +156,60 @@ module.exports = env => {
         chunkFilename: devMode ? "[id].css" : "[id].css?[contenthash]",
       }),
       new NodePolyfillPlugin(), // for crypto, among others
+      new webpack.EnvironmentPlugin({
+        WEBPACK_BUNDLE: "development",
+      }),
+      // https://github.com/remarkjs/remark/discussions/903
+      new webpack.ProvidePlugin({ process: "process/browser.js" }),
     ]
-  };
-};
+});
+
+
+if (WEBPACK_BUNDLE !== "production") {
+  // replace minified files with un-minified versions
+  for (const name in config.resolve.alias) {
+    const minified = config.resolve.alias[name];
+    const unminified = minified.replace(/[.-\/]min\b/g, "");
+    if (minified !== unminified && fs.existsSync(unminified)) {
+      config.resolve.alias[name] = unminified;
+    }
+  }
+
+  // by default enable "cheap" source maps for fast re-build speed
+  // with BETTER_SOURCE_MAPS we switch to sourcemaps that work with breakpoints and makes stacktraces readable
+  config.devtool = process.env.BETTER_SOURCE_MAPS
+    ? "eval-source-map"
+    : "cheap-module-source-map";
+
+  // helps with source maps
+  config.output.devtoolModuleFilenameTemplate = "[absolute-resource-path]";
+  config.output.pathinfo = true;
+
+  config.plugins.push(
+    new WebpackNotifierPlugin({
+      excludeWarnings: true,
+      skipFirstNotification: true,
+    }),
+  );
+} else {
+  config.plugins.push(
+    new TerserPlugin({ parallel: true, test: /\.(tsx?|jsx?)($|\?)/i }),
+  );
+
+  config.devtool = "source-map";
+}
+
+function getLocalIpAddress(ipFamily) {
+  const networkInterfaces = os.networkInterfaces();
+  const interfaces = Object.keys(networkInterfaces)
+    .sort()
+    .map(iface => networkInterfaces[iface])
+    .reduce((interfaces, iface) => interfaces.concat(iface));
+
+  const externalInterfaces = interfaces.filter(iface => !iface.internal);
+
+  const { address } = externalInterfaces
+    .filter(({ family }) => family === ipFamily)
+    .shift();
+  return address;
+}
