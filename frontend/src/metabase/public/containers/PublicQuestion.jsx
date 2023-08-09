@@ -172,6 +172,8 @@ class PublicQuestion extends Component {
       params: { uuid, token },
       metadata,
       location,
+      className,
+      hasScroll = true,
     } = this.props;
     const { card, result, initialized, parameterValues } = this.state;
     const question = new Question(card, metadata);
@@ -200,6 +202,8 @@ class PublicQuestion extends Component {
         parameters={initialized ? parameters : []}
         parameterValues={parameterValues}
         setParameterValue={this.setParameterValue}
+        className={className}
+        hasScroll={hasScroll}
       >
         <LoadingAndErrorWrapper
           className="flex-full"

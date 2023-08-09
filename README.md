@@ -96,7 +96,7 @@ yarn build:js
 Test frontent
 
 ```
-npx serve resources/frontend_client/
+npx serve --cors resources/frontend_client/
 ```
 
 Copy to Steedos Analytics

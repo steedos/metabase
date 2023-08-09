@@ -109,6 +109,8 @@ class PublicDashboard extends Component {
       isFullscreen,
       isNightMode,
       location,
+      className,
+      hasScroll = true,
     } = this.props;
     const buttons = !isWithinIframe()
       ? getDashboardActions(this, { ...this.props, isPublic: true })
@@ -123,9 +125,11 @@ class PublicDashboard extends Component {
         parameters={parameters}
         parameterValues={parameterValues}
         setParameterValue={this.props.setParameterValue}
+        className={className}
         actionButtons={
           buttons.length > 0 && <div className="flex">{buttons}</div>
         }
+        hasScroll={hasScroll}
       >
         <LoadingAndErrorWrapper
           className={cx("Dashboard p1 flex-full", {

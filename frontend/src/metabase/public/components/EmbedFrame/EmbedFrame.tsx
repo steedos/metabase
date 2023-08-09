@@ -44,6 +44,7 @@ interface OwnProps {
   parameters?: Parameter[];
   parameterValues?: Record<ParameterId, ParameterValueOrArray>;
   setParameterValue?: (parameterId: ParameterId, value: any) => void;
+  hasScroll: boolean;
   children: React.ReactNode;
 }
 
@@ -84,8 +85,9 @@ function EmbedFrame({
   parameters,
   parameterValues,
   setParameterValue,
+  hasScroll = true,
 }: Props) {
-  const [hasInnerScroll, setInnerScroll] = useState(true);
+  const [hasInnerScroll, setInnerScroll] = useState(hasScroll);
 
   useMount(() => {
     initializeIframeResizer(() => setInnerScroll(false));
