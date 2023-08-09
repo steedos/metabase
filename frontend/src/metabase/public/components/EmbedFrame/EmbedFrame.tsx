@@ -44,7 +44,6 @@ interface OwnProps {
   parameters?: Parameter[];
   parameterValues?: Record<ParameterId, ParameterValueOrArray>;
   setParameterValue?: (parameterId: ParameterId, value: any) => void;
-  hasScroll: boolean;
   children: React.ReactNode;
 }
 
@@ -63,6 +62,7 @@ interface HashOptions {
   theme?: string;
   hide_parameters?: string;
   hide_download_button?: boolean;
+  has_scroll?: boolean;
 }
 
 function mapStateToProps(state: State) {
@@ -85,21 +85,21 @@ function EmbedFrame({
   parameters,
   parameterValues,
   setParameterValue,
-  hasScroll = true,
 }: Props) {
-  const [hasInnerScroll, setInnerScroll] = useState(hasScroll);
-
-  useMount(() => {
-    initializeIframeResizer(() => setInnerScroll(false));
-  });
-
   const {
     bordered = isWithinIframe(),
     titled = true,
     theme,
     hide_parameters,
     hide_download_button,
+    has_scroll = true,
   } = parseHashOptions(location.hash) as HashOptions;
+
+  const [hasInnerScroll, setInnerScroll] = useState(has_scroll);
+
+  useMount(() => {
+    initializeIframeResizer(() => setInnerScroll(false));
+  });
 
   const showFooter =
     hasEmbedBranding || (!hide_download_button && actionButtons);
