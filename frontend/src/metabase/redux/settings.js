@@ -14,6 +14,9 @@ export const refreshSiteSettings = createThunkAction(
   REFRESH_SITE_SETTINGS,
   ({ locale } = {}) =>
     async (dispatch, getState) => {
+      if (!window.MetabaseBootstrap) {
+        return {};
+      }
       const settings = await SessionApi.properties(null, {
         headers: locale ? { "X-Metabase-Locale": locale } : {},
       });
@@ -29,7 +32,7 @@ const values = handleActions(
     },
   },
   // seed with setting values from MetabaseBootstrap
-  window.MetabaseBootstrap,
+  window.MetabaseBootstrap || {},
 );
 
 export default combineReducers({

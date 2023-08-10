@@ -67,11 +67,6 @@ import Visualization from "./visualizations/components/Visualization";
 
 import { getStore } from "./store";
 
-// remove trailing slash
-const BASENAME = window.MetabaseRoot.replace(/\/+$/, "");
-
-api.basename = BASENAME;
-
 // eslint-disable-next-line react-hooks/rules-of-hooks
 // const browserHistory = useRouterHistory(createHistory)({
 //   basename: BASENAME,
@@ -82,8 +77,22 @@ const theme = {
 };
 
 // registerVisualizations();
+let initialized = false;
 
-function _init(callback) {
+export function init(bootstrap, callback) {
+  if (initialized) {
+    return;
+  }
+
+  initialized = true;
+  window.MetabaseRoot = bootstrap["site-url"];
+  window.MetabaseBootstrap = bootstrap;
+
+  // remove trailing slash
+  const BASENAME = window.MetabaseRoot.replace(/\/+$/, "");
+
+  api.basename = BASENAME;
+
   const store = getStore(reducers);
 
   createTracker(store);
@@ -115,22 +124,21 @@ function _init(callback) {
   }
 }
 
-export function init(...args) {
-  if (document.readyState !== "loading") {
-    _init(...args);
-  } else {
-    document.addEventListener("DOMContentLoaded", () => _init(...args));
-  }
-}
+export const Provider = props => {
+  console.log("Provider", props);
+  const { bootstrap = {}, children } = props;
 
-_init();
-
-export const Provider = ({ children }) => {
   let root;
 
   React.useEffect(() => {
     PLUGIN_APP_INIT_FUCTIONS.forEach(init => init({ root }));
   });
+
+  if (!bootstrap) {
+    return <div>Props bootstrap is needed</div>;
+  } else {
+    init(bootstrap);
+  }
 
   return (
     <ReduxProvider store={window.Metabase.store} ref={ref => (root = ref)}>
@@ -145,6 +153,7 @@ export const Provider = ({ children }) => {
 };
 Provider.propTypes = {
   children: PropTypes.node,
+  bootstrap: PropTypes.object,
 };
 
 export {

@@ -14,6 +14,7 @@ const ANTI_CSRF_HEADER = "X-Metabase-Anti-CSRF-Token";
 let ANTI_CSRF_TOKEN = null;
 
 const DEFAULT_OPTIONS = {
+  withCredentials: true, // Steedos Analytics
   json: true,
   hasBody: false,
   noEvent: false,
@@ -80,7 +81,6 @@ export class Api extends EventEmitter {
             delete data[name];
           }
         }
-
         const headers = options.json
           ? { Accept: "application/json", "Content-Type": "application/json" }
           : {};
@@ -91,6 +91,11 @@ export class Api extends EventEmitter {
 
         if (ANTI_CSRF_TOKEN) {
           headers[ANTI_CSRF_HEADER] = ANTI_CSRF_TOKEN;
+        }
+
+        const authorization = window.MetabaseBootstrap?.api?.authorization;
+        if (authorization) {
+          headers["Authorization"] = authorization;
         }
 
         let body;
@@ -168,16 +173,17 @@ export class Api extends EventEmitter {
       let isCancelled = false;
       const xhr = new XMLHttpRequest();
       xhr.open(method, this.basename + url);
+      xhr.withCredentials = true;
       for (const headerName in headers) {
         xhr.setRequestHeader(headerName, headers[headerName]);
       }
       xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           // getResponseHeader() is case-insensitive
-          const antiCsrfToken = xhr.getResponseHeader(ANTI_CSRF_HEADER);
-          if (antiCsrfToken) {
-            ANTI_CSRF_TOKEN = antiCsrfToken;
-          }
+          // const antiCsrfToken = xhr.getResponseHeader(ANTI_CSRF_HEADER);
+          // if (antiCsrfToken) {
+          //   ANTI_CSRF_TOKEN = antiCsrfToken;
+          // }
 
           let body = xhr.responseText;
           if (options.json) {
