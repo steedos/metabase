@@ -56,10 +56,8 @@ const config = (module.exports = {
   // output a bundle for the app JS and a bundle for styles
   // eventually we should have multiple (single file) entry points for various pieces of the app to enable code splitting
   entry: {
-    "app-main": "./app-main.js",
-    "app-public": "./app-public.js",
-    "app-embed": "./app-embed.js",
-    styles: "./css/index.css",
+    // Steedos Analytics
+    "app-umd": "./app-umd.js",
   },
 
   // output to "dist"
@@ -176,16 +174,17 @@ const config = (module.exports = {
       }
     : undefined,
   optimization: {
-    runtimeChunk: "single",
-    splitChunks: {
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          chunks: "all",
-          name: "vendor",
-        },
-      },
-    },
+    // Steedos Analytics
+    // runtimeChunk: "single",
+    // splitChunks: {
+    //   cacheGroups: {
+    //     vendors: {
+    //       test: /[\\/]node_modules[\\/]/,
+    //       chunks: "all",
+    //       name: "vendor",
+    //     },
+    //   },
+    // },
   },
 
   plugins: [
@@ -195,41 +194,41 @@ const config = (module.exports = {
       filename: devMode ? "[name].css" : "[name].css?[contenthash]",
       chunkFilename: devMode ? "[id].css" : "[id].css?[contenthash]",
     }),
-    new HtmlWebpackPlugin({
-      filename: "../../index.html",
-      chunksSortMode: "manual",
-      chunks: ["vendor", "styles", "app-main"],
-      template: __dirname + "/resources/frontend_client/index_template.html",
-      inject: "head",
-      // Using default of "defer" creates race-condition when applying whitelabel colors (metabase#18173)
-      scriptLoading: "blocking",
-      alwaysWriteToDisk: true,
-    }),
-    new HtmlWebpackPlugin({
-      filename: "../../public.html",
-      chunksSortMode: "manual",
-      chunks: ["vendor", "styles", "app-public"],
-      template: __dirname + "/resources/frontend_client/index_template.html",
-      inject: "head",
-      scriptLoading: "blocking",
-      alwaysWriteToDisk: true,
-    }),
-    new HtmlWebpackPlugin({
-      filename: "../../embed.html",
-      chunksSortMode: "manual",
-      chunks: ["vendor", "styles", "app-embed"],
-      template: __dirname + "/resources/frontend_client/index_template.html",
-      inject: "head",
-      scriptLoading: "blocking",
-      alwaysWriteToDisk: true,
-    }),
-    new HtmlWebpackHarddiskPlugin({
-      outputPath: __dirname + "/resources/frontend_client/app/dist",
-    }),
-    new webpack.BannerPlugin({
-      banner:
-        "/*\n* This file is subject to the terms and conditions defined in\n * file 'LICENSE.txt', which is part of this source code package.\n */\n",
-    }),
+    // new HtmlWebpackPlugin({
+    //   filename: "../../index.html",
+    //   chunksSortMode: "manual",
+    //   chunks: ["vendor", "styles", "app-main"],
+    //   template: __dirname + "/resources/frontend_client/index_template.html",
+    //   inject: "head",
+    //   // Using default of "defer" creates race-condition when applying whitelabel colors (metabase#18173)
+    //   scriptLoading: "blocking",
+    //   alwaysWriteToDisk: true,
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: "../../public.html",
+    //   chunksSortMode: "manual",
+    //   chunks: ["vendor", "styles", "app-public"],
+    //   template: __dirname + "/resources/frontend_client/index_template.html",
+    //   inject: "head",
+    //   scriptLoading: "blocking",
+    //   alwaysWriteToDisk: true,
+    // }),
+    // new HtmlWebpackPlugin({
+    //   filename: "../../embed.html",
+    //   chunksSortMode: "manual",
+    //   chunks: ["vendor", "styles", "app-embed"],
+    //   template: __dirname + "/resources/frontend_client/index_template.html",
+    //   inject: "head",
+    //   scriptLoading: "blocking",
+    //   alwaysWriteToDisk: true,
+    // }),
+    // new HtmlWebpackHarddiskPlugin({
+    //   outputPath: __dirname + "/resources/frontend_client/app/dist",
+    // }),
+    // new webpack.BannerPlugin({
+    //   banner:
+    //     "/*\n* This file is subject to the terms and conditions defined in\n * file 'LICENSE.txt', which is part of this source code package.\n */\n",
+    // }),
     new NodePolyfillPlugin(), // for crypto, among others
     new webpack.EnvironmentPlugin({
       WEBPACK_BUNDLE: "development",

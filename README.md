@@ -81,6 +81,7 @@ Build frontend dev
 export WEBPACK_BUNDLE=development
 yarn build-quick:cljs
 yarn build:js
+yarn build:umd
 ```
 
 Build frontend production
@@ -91,6 +92,7 @@ nvm use 16
 export WEBPACK_BUNDLE=production
 yarn build:cljs
 yarn build:js
+yarn build:umd
 ```
 
 Test frontent
