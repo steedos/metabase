@@ -104,7 +104,7 @@ npx serve --cors resources/frontend_client/
 Copy to Steedos Analytics
 
 ```
-cp -r resources/frontend_client/* ../analytics/frontend
+cp -r resources/frontend_client/app/dist/* ../analytics/frontend/app/dist
 cd ../analytics/frontend
 rm -r *.js.map
 npm login

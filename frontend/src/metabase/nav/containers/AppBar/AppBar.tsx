@@ -6,7 +6,7 @@ import { logout } from "metabase/auth/actions";
 import { closeNavbar, getIsNavbarOpen, toggleNavbar } from "metabase/redux/app";
 import {
   getIsCollectionPathVisible,
-  getIsLogoVisible,
+  // getIsLogoVisible,
   getIsNavBarEnabled,
   getIsNewButtonVisible,
   // getIsProfileLinkVisible,
@@ -24,7 +24,7 @@ const mapStateToProps = (state: State, props: RouterProps) => ({
   isNavBarOpen: getIsNavbarOpen(state),
   isNavBarEnabled: getIsNavBarEnabled(state, props),
   // Steedos Analytics
-  isLogoVisible: getIsLogoVisible(state),
+  isLogoVisible: false, //getIsLogoVisible(state),
   isSearchVisible: false, // getIsSearchVisible(state),
   isNewButtonVisible: getIsNewButtonVisible(state),
   isProfileLinkVisible: false, // getIsProfileLinkVisible(state),
