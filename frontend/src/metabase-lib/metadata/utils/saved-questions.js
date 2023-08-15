@@ -40,8 +40,11 @@ export function getQuestionIdFromVirtualTableId(tableId) {
   if (typeof tableId !== "string") {
     return null;
   }
-  const id = parseInt(tableId.replace("card__", ""));
-  return Number.isSafeInteger(id) ? id : null;
+  // Steedos Analytics
+  // const id = parseInt(tableId.replace("card__", ""));
+  // return Number.isSafeInteger(id) ? id : null;
+  const id = tableId.replace("card__", "");
+  return id ? id : null;
 }
 
 export function convertSavedQuestionToVirtualTable(card) {

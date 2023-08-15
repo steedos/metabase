@@ -114,7 +114,7 @@ const DashboardApp = props => {
   const { isRunning, isLoadingComplete, dashboard } = props;
 
   const [editingOnLoad] = useState(options.edit);
-  const [addCardOnLoad] = useState(options.add && options.add); //@steedos useState(options.add && parseInt(options.add));
+  const [addCardOnLoad] = useState(options.add && options.add); //Steedos Analytics: useState(options.add && parseInt(options.add));
 
   const [isShowingToaster, setIsShowingToaster] = useState(false);
 

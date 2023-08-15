@@ -167,3 +167,5 @@ export {
   PublicQuestion,
   PublicDashboard,
 };
+
+export * as MetabaseLibCard from "metabase/lib/card";

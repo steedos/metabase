@@ -89,7 +89,9 @@ function replaceTagName(
 
 export function cardIdFromTagName(name: string): number | null {
   const match = name.match(CARD_TAG_NAME_REGEX);
-  return parseInt(match?.[1]) || null;
+  return match?.[1] || null;
+  // Steedos Analytics
+  // return parseInt(match?.[1]) || null;
 }
 
 function isCardTagName(tagName: string): boolean {

@@ -142,5 +142,7 @@ export function applyParameters(
 }
 
 export function isTransientId(id) {
-  return id != null && typeof id === "string" && isNaN(parseInt(id));
+  // Steedos Analytics
+  // return id != null && typeof id === "string" && isNaN(parseInt(id));
+  return id != null && typeof id === "string" && isNaN(id);
 }

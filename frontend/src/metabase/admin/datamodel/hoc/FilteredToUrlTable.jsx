@@ -16,7 +16,9 @@ const FilteredToUrlTable = propName => ComposedComponent =>
       constructor(props) {
         super(props);
         const { table } = props.location.query || {};
-        this.state = { tableId: table != null ? parseInt(table) : null };
+        // Steedos Analytics
+        // this.state = { tableId: table != null ? parseInt(table) : null };
+        this.state = { tableId: table != null ? table : null };
       }
 
       setTableId = tableId => {

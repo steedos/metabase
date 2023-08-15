@@ -30,8 +30,10 @@ export {
 
 export const getUser = (state, props) => state.currentUser;
 
-export const getMetricId = (state, props) =>
-  Number.parseInt(props.params.metricId);
+export const getMetricId = (state, props) => props.params.metricId;
+// Steedos Analytics
+// Number.parseInt(props.params.metricId);
+
 export const getMetric = createSelector(
   [getMetricId, getMetrics],
   (metricId, metrics) => metrics[metricId] || { id: metricId },
@@ -44,16 +46,19 @@ export const getSegment = createSelector(
   (segmentId, segments) => segments[segmentId] || { id: segmentId },
 );
 
-export const getDatabaseId = (state, props) =>
-  Number.parseInt(props.params.databaseId);
+export const getDatabaseId = (state, props) => props.params.databaseId;
+// Steedos Analytics
+// Number.parseInt(props.params.databaseId);
 
 export const getDatabase = createSelector(
   [getDatabaseId, getDatabases],
   (databaseId, databases) => databases[databaseId] || { id: databaseId },
 );
 
-export const getTableId = (state, props) =>
-  Number.parseInt(props.params.tableId);
+export const getTableId = (state, props) => props.params.tableId;
+// Steedos Analytics
+// Number.parseInt(props.params.tableId);
+
 // export const getTableId = (state, props) => Number.parseInt(props.params.tableId);
 export const getTablesByDatabase = createSelector(
   [getTables, getDatabase],
@@ -91,8 +96,10 @@ export const getTable = createSelector(
       : {},
 );
 
-export const getFieldId = (state, props) =>
-  Number.parseInt(props.params.fieldId);
+export const getFieldId = (state, props) => props.params.fieldId;
+// Steedos Analytics
+// Number.parseInt(props.params.fieldId);
+
 export const getFieldsByTable = createSelector(
   [getTable, getFields],
   (table, fields) =>

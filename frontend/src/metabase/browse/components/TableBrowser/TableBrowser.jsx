@@ -117,8 +117,8 @@ const TableBrowserItem = ({ database, table, dbId, xraysEnabled }) => {
 TableBrowserItem.propTypes = itemPropTypes;
 
 const itemButtonsPropTypes = {
-  tableId: PropTypes.number,
-  dbId: PropTypes.number,
+  tableId: PropTypes.number || PropTypes.string,
+  dbId: PropTypes.number || PropTypes.string,
   xraysEnabled: PropTypes.bool,
 };
 

@@ -74,8 +74,11 @@ function getCardForBlankQuestion({
   segment,
   metric,
 }: BlankQueryOptions) {
-  const databaseId = db ? parseInt(db) : undefined;
-  const tableId = table ? parseInt(table) : undefined;
+  // Steedos Analytics
+  // const databaseId = db ? parseInt(db) : undefined;
+  // const tableId = table ? parseInt(table) : undefined;
+  const databaseId = db ? db : undefined;
+  const tableId = table ? table : undefined;
 
   let question = Question.create({ databaseId, tableId });
 

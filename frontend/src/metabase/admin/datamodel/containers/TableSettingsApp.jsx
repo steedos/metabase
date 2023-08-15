@@ -16,8 +16,11 @@ import Section, { SectionHeader } from "../components/Section";
 import { rescanTableFieldValues, discardTableFieldValues } from "../table";
 
 const mapStateToProps = (state, { params: { databaseId, tableId } }) => ({
-  databaseId: parseInt(databaseId),
-  tableId: parseInt(tableId),
+  // Steedos Analytics
+  // databaseId: parseInt(databaseId),
+  // tableId: parseInt(tableId),
+  databaseId: databaseId,
+  tableId: tableId,
 });
 
 const mapDispatchToProps = {

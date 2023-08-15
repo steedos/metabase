@@ -83,7 +83,9 @@ export default class ColumnsList extends Component {
           ? newIndex // move dragged column to new location
           : index; // otherwise, leave it where it is
       fieldOrder[id] = idx;
-      sortedFieldIds[idx] = parseInt(id);
+      // Steedos Analytics
+      // sortedFieldIds[idx] = parseInt(id);
+      sortedFieldIds[idx] = id;
     }
     this.setState({ fieldOrder });
 

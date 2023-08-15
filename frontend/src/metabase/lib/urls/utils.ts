@@ -1,12 +1,14 @@
 export function appendSlug(path: string | number, slug?: string) {
-  return String(path);
-  // return slug ? `${path}-${slug}` : String(path);
+  // return String(path);
+  // Steedos Analytics
+  return slug ? `${path}-${slug}` : String(path);
 }
 
 export function extractEntityId(slug = "") {
-  return slug;
-  const id = parseInt(slug, 10);
-  return Number.isSafeInteger(id) ? id : undefined;
+  return slug ? slug : undefined;
+  // Steedos Analytics
+  // const id = parseInt(slug, 10);
+  // return Number.isSafeInteger(id) ? id : undefined;
 }
 
 function flattenParam([key, value]: [string, unknown]) {

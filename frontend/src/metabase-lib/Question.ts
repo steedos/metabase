@@ -862,15 +862,15 @@ class QuestionInner {
     return this.setCard(assoc(this.card(), "name", name));
   }
 
-  collectionId(): number | null | undefined {
+  collectionId(): string | number | null | undefined {
     return this._card && this._card.collection_id;
   }
 
-  setCollectionId(collectionId: number | null | undefined) {
+  setCollectionId(collectionId: string | number | null | undefined) {
     return this.setCard(assoc(this.card(), "collection_id", collectionId));
   }
 
-  id(): number {
+  id(): string | number {
     return this._card && this._card.id;
   }
 
@@ -884,7 +884,7 @@ class QuestionInner {
     dashboardId,
     dashcardId,
   }:
-    | { dashboardId: number; dashcardId: number }
+    | { dashboardId: string | number; dashcardId: string | number }
     | { dashboardId: undefined; dashcardId: undefined }): Question {
     const card = chain(this.card())
       .assoc("dashboardId", dashboardId)

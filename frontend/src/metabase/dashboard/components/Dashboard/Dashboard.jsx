@@ -54,7 +54,7 @@ class Dashboard extends Component {
     isAdditionalInfoVisible: PropTypes.bool,
 
     dashboard: PropTypes.object,
-    dashboardId: PropTypes.string, //PropTypes.number
+    dashboardId: PropTypes.string || PropTypes.number, // Steedos Analytics: PropTypes.number
     parameters: PropTypes.array,
     parameterValues: PropTypes.object,
     editingParameter: PropTypes.object,
