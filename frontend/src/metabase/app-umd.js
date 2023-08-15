@@ -28,6 +28,8 @@ import "metabase/plugins/builtin";
 // If EE isn't enabled, it loads an empty file.
 import "ee-plugins"; // eslint-disable-line import/no-unresolved, import/no-duplicates
 
+import "metabase/css/index_umd.css";
+
 import PropTypes from "prop-types";
 import React from "react";
 // import ReactDOM from "react-dom";

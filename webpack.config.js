@@ -71,11 +71,6 @@ const config = (module.exports = {
     library: 'Analytics',
     libraryTarget: 'umd',
   },
-
-  externals: {
-    react: 'React',
-    "react-dom": 'ReactDOM',
-  },
   
   module: {
     rules: [
