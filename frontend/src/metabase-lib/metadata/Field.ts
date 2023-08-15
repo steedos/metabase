@@ -502,7 +502,10 @@ class FieldInner extends Base {
   }
 
   isVirtual() {
-    return typeof this.id !== "number";
+    // Steedos Analytics
+    // TODO:
+    // return typeof this.id !== "number";
+    return typeof this.id !== "number" && typeof this.id !== "string";
   }
 
   /**

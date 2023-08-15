@@ -72,7 +72,9 @@ export default class FieldRemapping extends React.Component {
     return (
       field.remapping.size > 0 &&
       [...field.remapping.keys()].every(
-        key => typeof key === "number" || key === null,
+        // Steedos Analytics
+        key =>
+          typeof key === "number" || typeof key === "string" || key === null,
       )
     );
   };
