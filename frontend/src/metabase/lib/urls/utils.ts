@@ -1,7 +1,7 @@
 export function appendSlug(path: string | number, slug?: string) {
-  // return String(path);
+  return String(path);
   // Steedos Analytics
-  return slug ? `${path}-${slug}` : String(path);
+  // return slug ? `${path}-${slug}` : String(path);
 }
 
 export function extractEntityId(slug = "") {
