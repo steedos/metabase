@@ -93,7 +93,7 @@ const BaseButton = forwardRef(function BaseButton(
       ref={ref}
       as={as}
       {..._.omit(props, ...BUTTON_VARIANTS)}
-      className={cx("Button", className, variantClasses, {
+      className={cx("Button", `Icon-${icon}`, className, variantClasses, {
         p1: !children,
       })}
       purple={props.purple}

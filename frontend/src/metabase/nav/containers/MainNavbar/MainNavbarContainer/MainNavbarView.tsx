@@ -210,7 +210,7 @@ function CollectionSectionHeading({
   return (
     <SidebarHeadingWrapper>
       <SidebarHeading>{t`Collections`}</SidebarHeading>
-      <CollectionsMoreIconContainer>
+      <CollectionsMoreIconContainer data-testid="CollectionsMoreIconContainer">
         <TippyPopoverWithTrigger
           renderTrigger={({ onClick }) => (
             <CollectionsMoreIcon name="ellipsis" onClick={onClick} size={12} />
