@@ -97,6 +97,7 @@ export const ModelDetailLink = styled(BaseModelDetailLink)`
 `;
 
 export const SortingControlContainer = styled.div`
+  white-space: nowrap;
   display: flex;
   align-items: center;
   color: ${props => (props.isActive ? color("text-dark") : "")};
