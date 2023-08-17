@@ -8,7 +8,7 @@ import {
   getIsCollectionPathVisible,
   // getIsLogoVisible,
   getIsNavBarEnabled,
-  getIsNewButtonVisible,
+  // getIsNewButtonVisible,
   // getIsProfileLinkVisible,
   getIsQuestionLineageVisible,
   // getIsSearchVisible,
@@ -26,7 +26,7 @@ const mapStateToProps = (state: State, props: RouterProps) => ({
   // Steedos Analytics
   isLogoVisible: false, //getIsLogoVisible(state),
   isSearchVisible: false, // getIsSearchVisible(state),
-  isNewButtonVisible: getIsNewButtonVisible(state),
+  isNewButtonVisible: false, //getIsNewButtonVisible(state),
   isProfileLinkVisible: false, // getIsProfileLinkVisible(state),
   isCollectionPathVisible: getIsCollectionPathVisible(state, props),
   isQuestionLineageVisible: getIsQuestionLineageVisible(state, props),

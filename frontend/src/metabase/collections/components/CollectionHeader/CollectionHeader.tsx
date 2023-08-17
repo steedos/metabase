@@ -3,6 +3,7 @@ import { withRouter } from "react-router";
 import type { Location } from "history";
 
 import { Collection } from "metabase-types/api";
+import NewItemButton from "metabase/nav/components/NewItemButton";
 
 import CollectionCaption from "./CollectionCaption";
 import CollectionBookmark from "./CollectionBookmark";
@@ -39,6 +40,7 @@ const CollectionHeader = ({
         onUpdateCollection={onUpdateCollection}
       />
       <HeaderActions data-testid="collection-menu">
+        <NewItemButton collectionId={collection.id} />
         <CollectionTimeline collection={collection} />
         <CollectionBookmark
           collection={collection}
