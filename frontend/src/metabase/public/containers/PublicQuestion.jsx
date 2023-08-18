@@ -124,6 +124,7 @@ class PublicQuestion extends Component {
     const {
       setErrorPage,
       params: { uuid, token },
+      location: { query },
     } = this.props;
     const { card, parameterValues } = this.state;
 
@@ -155,6 +156,7 @@ class PublicQuestion extends Component {
         )({
           uuid,
           parameters: JSON.stringify(datasetQuery.parameters),
+          ...query,
         });
       } else {
         throw { status: 404 };
