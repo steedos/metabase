@@ -115,7 +115,39 @@ const config = (module.exports = {
                 },
               },
           { loader: "css-loader", options: CSS_CONFIG },
-          { loader: "postcss-loader" },
+          { loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: {
+                  "postcss-prefix-selector": {
+                    prefix: '.mb',
+                    transform(prefix, selector, prefixedSelector, filePath, rule) {
+                      if (selector.match(/.tippy/)) {
+                        return selector; // composition is only allowed when selector is single :local class name
+                      }
+                      if (selector.match(/:/)) {
+                        return selector; // composition is only allowed when selector is single :local class name
+                      }
+                      if (selector.match(/^(html|body)/)) {
+                        return selector.replace(/^([^\s]*)/, `$1 ${prefix}`);
+                      }
+                      
+                      if (filePath.match(/node_modules/)) {
+                        return selector; // Do not prefix styles imported from node_modules
+                      }
+                      
+                      const annotation = rule.prev();
+                      if (annotation?.type === 'comment' && annotation.text.trim() === 'no-prefix') {
+                        return selector; // Do not prefix style rules that are preceded by: /* no-prefix */
+                      }
+    
+                      return prefixedSelector;
+                    },
+                  },
+                }
+              }
+            }
+          },
         ],
       },
       {

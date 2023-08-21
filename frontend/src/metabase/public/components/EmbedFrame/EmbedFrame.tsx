@@ -114,7 +114,7 @@ function EmbedFrame({
     <Root
       hasScroll={hasInnerScroll}
       isBordered={bordered}
-      className={cx("EmbedFrame", className, {
+      className={cx("mb", "EmbedFrame", className, {
         [`Theme--${theme}`]: !!theme,
       })}
       data-testid="embed-frame"
