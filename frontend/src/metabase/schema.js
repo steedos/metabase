@@ -3,7 +3,10 @@
 import { schema } from "normalizr";
 import { entityTypeForObject } from "metabase/lib/schema";
 import { generateSchemaId } from "metabase-lib/metadata/utils/schema";
-import { SAVED_QUESTIONS_VIRTUAL_DB_ID } from "metabase-lib/metadata/utils/saved-questions";
+import {
+  SAVED_QUESTIONS_VIRTUAL_DB_ID,
+  isVirtualCardId,
+} from "metabase-lib/metadata/utils/saved-questions";
 import { getUniqueFieldId } from "metabase-lib/metadata/utils/fields";
 
 export const ActionSchema = new schema.Entity("actions");
@@ -24,7 +27,10 @@ export const TableSchema = new schema.Entity(
       // Saved questions are represented as database tables,
       // and collections they're saved to as schemas
       // Virtual tables ID are strings like "card__45" (where 45 is a question ID)
-      const isVirtualSchema = typeof table.id === "string";
+
+      // Steedos Analytics
+      // const isVirtualSchema = typeof table.id === "string";
+      const isVirtualSchema = isVirtualCardId(table.id);
 
       const databaseId = isVirtualSchema
         ? SAVED_QUESTIONS_VIRTUAL_DB_ID
