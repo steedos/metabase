@@ -1,0 +1,1 @@
+(ns metabase.query-processor.error-type)
