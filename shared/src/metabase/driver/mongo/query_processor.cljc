@@ -927,7 +927,8 @@
 (defn- aggregation->rvalue [ag]
   (mbql.u/match-one ag
     [:aggregation-options ag' _]
-    (recur ag')
+    ;;  TODO
+    ;; (recur ag')
 
     [:count]
     {$sum 1}
@@ -951,7 +952,8 @@
                   :else 0}}}
 
     [:count-where pred]
-    (recur [:sum-where [:value 1] pred])
+    ;;  TODO
+    ;; (recur [:sum-where [:value 1] pred])
 
     :else
     (throw
